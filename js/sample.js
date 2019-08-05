@@ -61,9 +61,19 @@ $(function(){
 
 
   });
+
+  // ハンバーガーメニュー
+
   $('.js-hamburger').on('click', function(){
     $(this).toggleClass('on');
   });
+
+  // jsスクロール
+  $('.js-scroll').on('click', function(){
+    // 500はtopに行くまでの速さ、０はtopからの距離
+    $('body,html').animate({scrollTop: 0}, 500);
+    // return false;
+  })
 
 
 
