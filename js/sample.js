@@ -72,9 +72,22 @@ $(function(){
   $('.js-scroll').on('click', function(){
     // 500はtopに行くまでの速さ、０はtopからの距離
     $('body,html').animate({scrollTop: 0}, 500);
-    // return false;
+    return false; //return?
   })
 
+  // モーダル
+  $('.js-modal').on('click', function(){
+    // コンテンツフェードイン
+    $('.modal-content').fadeIn('slow');
+    // 背景フェードイン
+    $('#modal-bg').fadeIn('slow');
+  });
+  $('.js-modal-close').on('click', function(){
+    // コンテンツフェードアウト
+    $('.modal-content').fadeOut(1000);
+    // 背景フェードアウト
+    $('#modal-bg').fadeOut(1000);
+  })
 
 
 
