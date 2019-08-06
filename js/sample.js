@@ -63,21 +63,34 @@ $(function(){
   });
 
   // ハンバーガーメニュー
-
+// if分で分岐したらメニューが作れるよ
   $('.js-hamburger').on('click', function(){
     $(this).toggleClass('on');
   });
 
+  // console.log($('body,html').scrollTop());
+  // console.log($(this).offset().top);
   // jsスクロール
   $('.js-scroll').on('click', function(){
-    // 500はtopに行くまでの速さ、０はtopからの距離
+    // 500はtopに行くまでの速さ、０はtopからの距離(px)
+    // body,htmlいっぺんに設定できる
+    // 移動距離はピクセル指定だけでなくjsで計算して指定する、ライブラリを使用することもできる
+    // アニメーションはできないこともあるから毎回調べる
     $('body,html').animate({scrollTop: 0}, 500);
-    return false; //return?
+    // 上からの移動量が計算できる
+    // $('body,html').animate({scrollTop: 
+    //   $('#toggle').offset().top
+    // }, 500);
+
+    // $(this).offset().top
+    
+    return false; //なんかエラーを吐いた時のために処理を止めるためのものなくても動く保険みたいなもの
   })
 
   // モーダル
   $('.js-modal').on('click', function(){
     // コンテンツフェードイン
+    // できれば秒数でやったほうがいい。これだと雑な感じがする
     $('.modal-content').fadeIn('slow');
     // 背景フェードイン
     $('#modal-bg').fadeIn('slow');
@@ -92,15 +105,57 @@ $(function(){
   // タブメニュー
   //?
   $('.tab-nav a').on('click', function(){
+    // クリックしたaタグにactiveがついてたら処理しないよ
+    // hasclassクラスを持っている
     if ($(this).hasClass('active')){
       return false;
-    }
+    }//クリックしたらまずactiveを外す処理を作る
     $('.tab-nav a').removeClass('active');
-    $('.tab-nav a').addClass('active');
+    // 一旦外した後にまたclassをつけている
+    $(this).addClass('active');
+    // tabcontentもまずはactiveを外す
     $('.tab-content > div').removeClass('active');
+    // hashはidのこと filterは検索ここではfilterについているhrefの#以降を探している
+    // thisはクリック要素しか取れない
+    // もしあった場合にactiveっていうクラスをつけるよってこと
     $('.tab-content > div').filter(this.hash).addClass('active');
     return false;
   })
+
+  // スライダー
+  // 大抵のスライダーはこんな作り
+  // outerWidthスライダーのタグのwidth
+  let slideWidth = $('.slide').outerWidth();
+  let slideNum = $('.slide').length;//スライダーってタグが何個あるか
+  let slideWrapperWidth = slideWidth * slideNum;//スライドのラッパー
+  let currentSlide = 0;//このコードに何回進んだかっていうのを数えている
+  $('.slide-wrapper').css('width',slideWrapperWidth);
+
+  // 次へ
+  $('next-slider').on('click', function(){
+    // 最後のスライドだった場合
+    // slidenumはスライドの数
+    // slidenumは１個多いから-1
+    if(currentSlide >= slideNum -1){
+      // 処理を途中で止めてる
+    return faluse;
+    }
+    currentSlide++;
+    slide();
+  });
+  $('.prev-slider').on('click', function(){
+    // 最初のスライドだった場合
+    if(currentSlide <= 0){
+      return false;
+    }
+    currentSlide--;
+    slide();
+  });
+  function slide(){
+    $('.slide-wrapper').stop().animate({
+      left: currentSlide * -slideWidth
+    });
+  }
 
 
 
