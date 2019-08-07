@@ -70,6 +70,7 @@ $(function(){
 
   // console.log($('body,html').scrollTop());
   // console.log($(this).offset().top);
+  
   // jsスクロール
   $('.js-scroll').on('click', function(){
     // 500はtopに行くまでの速さ、０はtopからの距離(px)
